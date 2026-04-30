@@ -3,18 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人網站 | MVP Version</title>
-    <link rel="stylesheet" href="style.css">
+    <title>個人網站 | 白庭菀 | 一對一家教服務</title>
+    <style>
+        /* 基礎設定 */
+        :root {
+            /* 淺粉色系配色 */
+            --bg-color: #fdf2f8; /* 非常淡的粉色 */
+            --text-color: #51323b; /* 深棕色，比純黑柔和 */
+            --accent-color: #f9a8d4; /* 珊瑚粉，強調色 */
+            --glass-bg: rgba(255, 255, 255, 0.4); /* 玻璃背景，磨砂感 */
+            --subtle-accent: #eec0c6; /* 更淡的奶油粉 */
+            --link-color: #51323b; 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden; /* 隱藏流動形狀產生的橫向捲軸 */
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Section 通用設定 */
+        section { 
+            padding: 100px 0; 
+            position: relative; /* 用於定位背景圖案 */
+        }
+        .section-title { 
+            margin-bottom: 40px; 
+            color: var(--accent-color); 
+            font-size: 2.5rem; 
+            text-align: center;
+        }
+
+        /* --- Hero Section --- */
+        .hero { 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            background-image: 
+                radial-gradient(at 10% 20%, var(--subtle-accent) 0px, transparent 50%),
+                radial-gradient(at 80% 90%, var(--accent-color) 0px, transparent 50%);
+            position: relative;
+        }
+
+        /* 微動態粒子背景 */
+        .hero::before, .hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(249, 168, 212, 0.3); /* 半透明強調色 */
+            animation: float 20s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        .hero::before { width: 300px; height: 300px; top: 10%; left: -150px; animation-duration: 25s; }
+        .hero::after { width: 200px; height: 200px; bottom: 10%; right: -100px; animation-duration: 20s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero h1 { 
+            font-size: 4rem; 
+            margin-bottom: 15px; 
+            letter-spacing: 2px;
+            color: var(--text-color);
+        }
+        .hero .accent-text { color: var(--accent-color); } /* 讓您的名字成為焦點 */
+        .subtitle { 
+            font-size: 1.5rem; 
+            margin-bottom: 50px; 
+            opacity: 0.9; 
+            font-weight: 300;
+        }
+
+        /* 按鈕樣式 (圓角與光暈) */
+        .button-group { display: flex; gap: 20px; justify-content: center; }
+        .btn { 
+            padding: 14px 30px; 
+            text-decoration: none; 
+            border-radius: 50px; /* 圓角 */
+            font-weight: bold; 
+            transition: 0.3s; 
+            border: 2px solid transparent; 
+        }
+        .btn-primary { 
+            background: linear-gradient(45deg, var(--accent-color), var(--subtle-accent));
+            color: white; 
+            box-shadow: 0 4px 15px rgba(249, 168, 212, 0.4);
+        }
+        .btn-primary:hover { 
+            box-shadow: 0 6px 20px rgba(249, 168, 212, 0.6);
+            transform: translateY(-3px); 
+        }
+        .btn-secondary { 
+            border: 2px solid var(--accent-color); 
+            color: var(--accent-color); 
+        }
+        .btn-secondary:hover { 
+            background-color: var(--accent-color); 
+            color: white; 
+            transform: translateY(-3px); 
+        }
+
+        /* --- About Me Section (Glassmorphism 卡片) --- */
+        .about {
+            background-color: var(--bg-color);
+        }
+        
+        .about-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px); /* 磨砂玻璃效果 */
+            padding: 50px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2); /* 玻璃邊框 */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .about-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 25px;
+            color: var(--accent-color);
+        }
+
+        /* --- Contact Section --- */
+        .contact {
+            background-color: var(--bg-color);
+            position: relative;
+        }
+        
+        /* 加入有機形狀背景 */
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="%23f9a8d433" d="M38.8,-53.4C50.2,-42.6,59.3,-30.9,64.2,-17.4C69,-3.9,69.5,11.5,63.9,24.8C58.3,38.1,46.6,49.2,33.5,56.5C20.4,63.8,5.8,67.3,-8.6,65.6C-23,63.9,-37.2,57.1,-48.5,47C-59.8,36.8,-68.1,23.3,-71.4,8.5C-74.6,-6.3,-72.7,-22.4,-65.4,-35.6C-58.1,-48.8,-45.5,-59.1,-32.2,-68C-18.9,-76.9,-4.9,-84.4,4.1,-90.4C13,-96.4,26.1,-100.9,38.8,-53.4Z" transform="translate(100 100)" /></svg>');
+            background-size: cover;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 1; /* 在有機形狀之上 */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .contact-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: 0.3s;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(249, 168, 212, 0.2);
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        .contact-card a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+        }
+        
+        .contact-card a:hover {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* RWD 響應式設計 */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .hero .subtitle { font-size: 1.2rem; }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.5rem; }
+            .button-group { flex-direction: column; gap: 15px; }
+            .about-content { padding: 30px; }
+        }
+    </style>
 </head>
 <body>
 
     <section id="hero" class="hero">
         <div class="container">
-            <h1>我是 [您的姓名]</h1>
-            <p class="subtitle">致力於打造高效、簡潔且具備商業價值的數位解決方案。</p>
+            <svg class="hero-top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:50px; height:50px; margin-bottom: 20px; color: #f9a8d4;"><path d="M16 8l-4 4-4-4M12 12V21" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 3a9 9 0 110 18 9 9 0 010-18z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <h1>我是 <span class="accent-text">白庭菀</span></h1>
+            <p class="subtitle">你最值得信任的一對一家教。</p>
             <div class="button-group">
-                <a href="#about" class="btn btn-primary">View Work</a>
-                <a href="#contact" class="btn btn-secondary">Contact Me</a>
+                <a href="#about" class="btn btn-primary">關於我的服務</a>
+                <a href="#contact" class="btn btn-secondary">聯繫我</a>
             </div>
         </div>
     </section>
@@ -22,23 +231,56 @@
     <section id="about" class="about">
         <div class="container">
             <h2 class="section-title">About Me</h2>
-            <p>你好！我是 [白庭菀]。目前專注於 [一對一家教]。</p>
-            <p>在這裡，我記錄我的專案與教學心得。</p>
+            <div class="about-content">
+                <svg class="about-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12s-3-4.5-9-4.5"/><path d="M12 12s3-4.5 9-4.5"/><path d="M12 12v9"/><path d="M12 12s3 4.5 9 4.5"/><path d="M12 12s-3 4.5-9 4.5"/><path d="M22 6s-1.5 2-3 2a9 9 0 01-9-9s-1.5 2-3 2a9 9 0 00-7 9"/><path d="M2 18s1.5-2 3-2a9 9 0 019 9"/></svg>
+                <p>你好！我是 白庭菀。目前專注於提供 [一對一家教服務（到府/線上）]。</p>
+                <p>我相信科技應服務於人，並熱衷於透過程式解決複雜的問題。在這裡，我記錄我的專案與學習心得。</p>
+            </div>
         </div>
     </section>
 
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Contact</h2>
-            <p>歡迎隨時與我聯繫，討論合作或技術交流。</p>
-            <div class="contact-links">
-                <a href="mailto:your-email@example.com">Email</a>
-                <a href="https://github.com/your-username" target="_blank">GitHub</a>
-                <a href="https://linkedin.com/in/your-username" target="_blank">LinkedIn</a>
+            <div class="contact-content">
+                
+                <div class="contact-card">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+                    <p>歡迎隨時與我聯繫：</p>
+                    <a href="mailto:your-email@example.com">你的 Email</a>
+                </div>
+                
+                <div class="contact-card">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 010 20"/></svg>
+                    <p>也歡迎追蹤我的專業平台：</p>
+                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 10px;">
+                        <a href="https://github.com/your-username" target="_blank">GitHub</a>
+                        <a href="https://linkedin.com/in/your-username" target="_blank">LinkedIn</a>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </section>
 
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 平滑捲動效果 (Smooth Scroll)
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
